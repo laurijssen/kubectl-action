@@ -7,7 +7,7 @@ jobs:
     steps:
     - name: action step
       id: kubectl
-      uses: laurijssen/kubectl-action
+      uses: laurijssen/kubectl-action@v3
       with:
         kubectl-version: 'v1.26.0'
     - name: Get the output time
