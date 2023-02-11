@@ -28,15 +28,15 @@ function downloadKubectl(version) {
 	console.log(`Downloading kubectl (${url})`)
 	debug(`Downloading kubectl checksum (${hashUrl})`)
 
-	const hashResponse = await fetch(hashUrl)
+	const hashResponse = fetch(hashUrl)
 	if (!hashResponse.ok) {
 		debug(`Failed to download kubectl checksum with status ${hashResponse.status}`)
 		warning(`Skipping checksum verification for kubectl ${version}`)
 	}
 
-	const hash = hashResponse.ok ? await hashResponse.text() : ''
+	const hash = hashResponse.ok ? hashResponse.text() : ''
 
-	const response = await fetch(url)
+	const response = fetch(url)
 	if (!response.ok || !response.body) {
 		debug(`Failed to download kubectl with status ${response.status}`)
 		setFailed(`Failed to download kubectl with status ${response.status}`)
