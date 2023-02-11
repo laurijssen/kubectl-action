@@ -11,7 +11,6 @@ try {
 
   if (!kubectl) {
       console.log(`kubectl not correctly downloaded version: ${version}`)
-      return
   }
 
   const time = (new Date()).toTimeString();
