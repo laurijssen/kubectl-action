@@ -11,5 +11,5 @@ inputs:
     description: A base64 encoded reference to your authorization file (~/.kube/config)
     required: false
 runs:
-  using: 'node18'
+  using: 'node16'
   main: 'index.js'
