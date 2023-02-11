@@ -5,7 +5,7 @@ try {
   const version = core.getInput('kubectl-version');
 
   console.log(`Installing kubectl version ${version}`)
-  const kubectl = await downloadKubectl(version)
+  const kubectl = downloadKubectl(version)
 
   if (!kubectl) {
       console.log(`kubectl not correctly downloaded version: ${version}`)
@@ -21,7 +21,7 @@ try {
   core.setFailed(error.message);
 }
 
-async function downloadKubectl(version) {
+function downloadKubectl(version) {
 	const url = `https://dl.k8s.io/release/${version}/bin/linux/amd64/kubectl`
 	const hashUrl = `${url}.sha256`
 
