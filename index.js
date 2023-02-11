@@ -1,5 +1,3 @@
-import { addPath, debug, getInput, saveState, setFailed, warning } from '@actions/core'
-
 const core = require('@actions/core');
 const github = require('@actions/github');
 
@@ -29,11 +27,11 @@ function downloadKubectl(version) {
 	const hashUrl = `${url}.sha256`
 
 	console.log(`Downloading kubectl (${url})`)
-	debug(`Downloading kubectl checksum (${hashUrl})`)
+	console.log(`Downloading kubectl checksum (${hashUrl})`)
 
 	const hashResponse = fetch(hashUrl)
 	if (!hashResponse.ok) {
-		debug(`Failed to download kubectl checksum with status ${hashResponse.status}`)
+		console.log(`Failed to download kubectl checksum with status ${hashResponse.status}`)
 		warning(`Skipping checksum verification for kubectl ${version}`)
 	}
 
@@ -41,7 +39,7 @@ function downloadKubectl(version) {
 
 	const response = fetch(url)
 	if (!response.ok || !response.body) {
-		debug(`Failed to download kubectl with status ${response.status}`)
+		console.log(`Failed to download kubectl with status ${response.status}`)
 		setFailed(`Failed to download kubectl with status ${response.status}`)
 		return
 	}
@@ -49,5 +47,5 @@ function downloadKubectl(version) {
 	const hashStream = createHash('sha256')
 	const { body, headers } = response
 	const size = Number(headers.get('content-length'))
-	debug(`Downloaded kubectl (${size} bytes)`)
+	console.log(`Downloaded kubectl (${size} bytes)`)
 }
