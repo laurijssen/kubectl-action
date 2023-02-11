@@ -1,3 +1,5 @@
+import { addPath, debug, getInput, saveState, setFailed, warning } from '@actions/core'
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 
@@ -21,6 +23,7 @@ try {
   core.setFailed(error.message);
 }
 
+// could be 
 function downloadKubectl(version) {
 	const url = `https://dl.k8s.io/release/${version}/bin/linux/amd64/kubectl`
 	const hashUrl = `${url}.sha256`
