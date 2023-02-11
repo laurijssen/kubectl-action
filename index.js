@@ -1,5 +1,7 @@
 import { fetch } from 'undici'
-import { core } from '@actions/core'
+
+import pkg from '@actions/core';
+const { core } = pkg;
 
 //const github = require('@actions/github');
 
