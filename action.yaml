@@ -6,13 +6,10 @@ branding:
 inputs:
   kubectl-version:
     description: Version of kubectl to use
-    required: false
-    default: latest
+    required: true
   kube-config:
     description: A base64 encoded reference to your authorization file (~/.kube/config)
-    required: true
+    required: false
 runs:
-  using: node16
-  main: dist/index.js
-  post: dist/index.js
-  
+  using: 'node18'
+  main: 'index.js'
