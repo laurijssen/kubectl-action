@@ -1,4 +1,4 @@
-const http = require('http');
+const http = require('https');
 const fs = require('fs');
 const core = require('@actions/core');
 //const github = require('@actions/github');
