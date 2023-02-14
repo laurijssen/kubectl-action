@@ -1,8 +1,6 @@
-import { fetch } from 'undici'
-
-import pkg from '@actions/core';
-const { core } = pkg;
-
+const http = require('http');
+const fs = require('fs');
+const core = require('@actions/core');
 //const github = require('@actions/github');
 
 try {
@@ -32,21 +30,22 @@ function downloadKubectl(version) {
 	console.log(`Downloading kubectl (${url})`)
 	console.log(`Downloading kubectl checksum (${hashUrl})`)
 
-	const hashResponse = fetch(hashUrl)
-	if (!hashResponse.ok) {
-		console.log(`Failed to download kubectl checksum with status ${hashResponse.status}`)
-		warning(`Skipping checksum verification for kubectl ${version}`)
-	}
+	const file = fs.createWriteStream('kubectl.hash');
 
-	const hash = hashResponse.ok ? hashResponse.text() : ''
+	http.get(hashUrl, (response) => {
+	  response.pipe(file);
+	}).on('error', (error) => {
+	  console.error(error);
+	});	
+	
+	file = fs.createWriteStream('/usr/local/kubectl')
 
-	const response = fetch(url)
-	if (!response.ok || !response.body) {
-		console.log(`Failed to download kubectl with status ${response.status}`)
-		setFailed(`Failed to download kubectl with status ${response.status}`)
-		return
-	}
-
+	http.get(url, (response) => {
+	  response.pipe(file);
+	}).on('error', (error) => {
+	  console.error(error);
+	});	
+	
 	const hashStream = createHash('sha256')
 	const { body, headers } = response
 	const size = Number(headers.get('content-length'))
